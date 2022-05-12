@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <input type="file" id="file" />
+    <pre></pre>
+    <button id="play">play</button>
+    <pre></pre>
+    <time id="time">00:00</time>
+    <span>/</span>
+    <time id="duration">00:00</time>
+  </body>
+  <script>
+    const fileInput = document.querySelector("#file");
+    const playButton = document.querySelector("#play");
+    const time = document.querySelector("#time");
+    const duration = document.querySelector("#duration");
+    let audioCtx
+    let source
+    let decodedData;
+    fileInput.addEventListener("change", async () => {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        console.log(reader.result, 'reader')
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        source = audioCtx.createBufferSource();
+        audioCtx.decodeAudioData(reader.result).then((_decodedData) => {
+          decodedData = _decodedData;
+          // console.log('decodeAudioData...')
+          audioCtx.suspend()
+        });
+      };
+      reader.readAsArrayBuffer(fileInput.files[0]);
+    });
+    playButton.addEventListener("click", function () {
+      playPause()
+    });
+    function audioprocess() {
+      const frame = requestAnimationFrame(() => {
+        time.innerText = audioCtx.currentTime;
+        audioprocess();
+      });
+    }
+    function audioprocess() {
+      const frame = requestAnimationFrame(() => {
+        time.innerText = audioCtx.currentTime.toFixed(2);
+        audioprocess();
+      });
+    }
+    function playPause() {
+      const audioCtxState = audioCtx.state
+      if(audioCtxState === 'running'){
+        source.stop()
+			  source.disconnect()
+        audioCtx.suspend()
+        console.log('stop')
+      } else if(audioCtxState === 'suspended'){
+        audioCtx.resume()
+        source = audioCtx.createBufferSource();
+        source.buffer = decodedData;
+        source.connect(audioCtx.destination);
+        source.loop = true;
+        source.start(audioCtx.currentTime);
+
+        console.log('playPause', audioCtx, audioCtx.currentTime);
+        audioprocess()
+      }
+    }
+  </script>
+</html>

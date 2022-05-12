@@ -1,0 +1,79 @@
+@font-face {
+	font-family: 'iconfont';
+	src: url('./fonts/iconfont.eot');
+	src: url('./fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+	url('./fonts/iconfont.woff2') format('woff2'),
+	url('./fonts/iconfont.woff') format('woff'),
+	url('./fonts/iconfont.ttf') format('truetype'),
+	url('./fonts/iconfont.svg#iconfont') format('svg');
+}
+.iconfont, .icon-control {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+	color: #999999;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-volume:before {
+	content: "\e662";
+}
+
+.icon-change:before {
+	content: "\e658";
+}
+
+.icon-refresh:before {
+	content: "\e69c";
+}
+
+.icon-pause:before {
+	content: "\e638";
+}
+
+.icon-mute:before {
+	content: "\e65e";
+}
+
+.icon-play:before {
+	content: "\e61c";
+}
+
+.icon-loop:before {
+	content: "\e66c";
+}
+
+.icon-loop-only:before {
+	content: "\e66d";
+}
+
+.icon-down:before {
+	content: "\e617";
+}
+
+.icon-backward:before {
+	content: "\e7f3";
+}
+
+.icon-forward:before {
+	content: "\e7f4";
+}
+
+.icon-next:before {
+	content: "\e7ff";
+}
+
+.icon-prev:before {
+	content: "\e800";
+}
+
+.icon-download:before {
+	content: "\e6e1";
+}
+
+.icon-switch-up-down:before {
+	content: "\e609";
+}
+
+
